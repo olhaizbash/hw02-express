@@ -1,0 +1,25 @@
+const Joi = require("joi");
+
+exports.schema = (data) =>
+  Joi.object({
+    name: Joi.string().min(3).max(15).required(),
+    email: Joi.string()
+      .email({
+        minDomainSegments: 2,
+        tlds: { allow: ["com", "net"] },
+      })
+      .required(),
+    phone: Joi.string(),
+    favorite: Joi.boolean(),
+  }).validate(data);
+
+exports.schemaFav = (data) =>
+  Joi.object({
+    name: Joi.string().min(3).max(15),
+    email: Joi.string().email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "net"] },
+    }),
+    phone: Joi.string(),
+    favorite: Joi.boolean().required(),
+  }).validate(data);
