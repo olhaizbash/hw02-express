@@ -10,7 +10,7 @@ const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 dotenv.config({
-  path: "./envs/file.env",
+  path: "./envs/.env",
 });
 mongoose
   .connect(process.env.MONGO_URL)
