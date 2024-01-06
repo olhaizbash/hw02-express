@@ -13,6 +13,17 @@ exports.schema = (data) =>
     favorite: Joi.boolean(),
   }).validate(data);
 
+exports.signupValidator = (data) =>
+  Joi.object({
+    email: Joi.string()
+      .email({
+        minDomainSegments: 2,
+        tlds: { allow: ["com", "net"] },
+      })
+      .required(),
+    password: Joi.string(),
+  }).validate(data);
+
 exports.schemaFav = (data) =>
   Joi.object({
     name: Joi.string().min(3).max(15),

@@ -15,7 +15,7 @@ const {
 } = require("../../controllers");
 
 const {
-  checkUserId,
+  checkContactId,
   checkIsExist,
   checkIsExistUpdate,
   checkFavoriteUpdate,
@@ -25,12 +25,11 @@ router.route("/").get(listContacts).post(checkIsExist, addContact);
 
 router
   .route("/:id")
-  .get(checkUserId, getContactById)
-  .put(checkUserId, checkIsExistUpdate, updateContact)
-  .delete(checkUserId, removeContact);
+  .get(checkContactId, getContactById)
+  .put(checkContactId, checkIsExistUpdate, updateContact)
+  .delete(checkContactId, removeContact);
 
 router
   .route("/:id/favorite")
-  .patch(checkUserId, checkFavoriteUpdate, updateContact);
-
+  .patch(checkContactId, checkFavoriteUpdate, updateContact);
 module.exports = router;
