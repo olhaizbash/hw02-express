@@ -21,7 +21,7 @@ exports.signupValidator = (data) =>
         tlds: { allow: ["com", "net"] },
       })
       .required(),
-    password: Joi.string(),
+    password: Joi.string().required(),
   }).validate(data);
 
 exports.schemaFav = (data) =>

@@ -19,17 +19,21 @@ const {
   checkIsExist,
   checkIsExistUpdate,
   checkFavoriteUpdate,
+  authenticate,
 } = require("../../middlewares");
 
-router.route("/").get(listContacts).post(checkIsExist, addContact);
+router
+  .route("/")
+  .get(authenticate, listContacts)
+  .post(authenticate, checkIsExist, addContact);
 
 router
   .route("/:id")
-  .get(checkContactId, getContactById)
-  .put(checkContactId, checkIsExistUpdate, updateContact)
-  .delete(checkContactId, removeContact);
+  .get(authenticate, checkContactId, getContactById)
+  .put(authenticate, checkContactId, checkIsExistUpdate, updateContact)
+  .delete(authenticate, checkContactId, removeContact);
 
 router
   .route("/:id/favorite")
-  .patch(checkContactId, checkFavoriteUpdate, updateContact);
+  .patch(authenticate, checkContactId, checkFavoriteUpdate, updateContact);
 module.exports = router;

@@ -9,8 +9,20 @@ exports.listContacts = catchAsync(async (req, res) => {
 });
 
 exports.getContactById = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const contactById = await Contact.findById(id);
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 20, favorite } = req.query;
+  const skip = (page - 1) * limit;
+
+  const filter = { owner };
+
+  if (favorite !== undefined) {
+    filter.favorite = favorite === "true";
+  }
+
+  const contactById = await Contact.find(filter, "-createdAt -updatedAt", {
+    skip,
+    limit,
+  });
 
   res.status(200).json(contactById);
 });
@@ -23,7 +35,8 @@ exports.removeContact = catchAsync(async (req, res) => {
 });
 
 exports.addContact = catchAsync(async (req, res) => {
-  const newContact = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const newContact = await Contact.create({ ...req.body, owner });
 
   res.status(201).json(newContact);
 });
