@@ -5,7 +5,7 @@ const { catchAsync, signupValidator } = require("../utils");
 
 exports.checkSignupData = catchAsync(async (req, res, next) => {
   const { value, error } = signupValidator(req.body);
-  if (error) throw new HttpError(400, "Invalid user data");
+  if (error) throw HttpError(400, "Invalid user data");
   const userExistsWithEmail = await User.exists({
     email: value.email,
   });
@@ -16,7 +16,7 @@ exports.checkSignupData = catchAsync(async (req, res, next) => {
 
 exports.loginData = catchAsync(async (req, res, next) => {
   const { value, error } = signupValidator(req.body);
-  if (error) throw new HttpError(400, "Invalid user data");
+  if (error) throw HttpError(400, "Invalid user data");
   req.body = value;
   next();
 });
