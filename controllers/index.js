@@ -6,7 +6,13 @@ const {
   updateContact,
 } = require("./contacts");
 
-const { signup, login, logout, currentUser } = require("./authcontrollers");
+const {
+  signup,
+  login,
+  logout,
+  currentUser,
+  updateSubscription,
+} = require("./authcontrollers");
 
 module.exports = {
   listContacts,
@@ -18,4 +24,5 @@ module.exports = {
   login,
   logout,
   currentUser,
+  updateSubscription,
 };

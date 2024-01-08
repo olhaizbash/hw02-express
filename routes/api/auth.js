@@ -6,7 +6,13 @@ const app = express();
 
 app.use(express.json());
 
-const { signup, login, logout, currentUser } = require("../../controllers");
+const {
+  signup,
+  login,
+  logout,
+  currentUser,
+  updateSubscription,
+} = require("../../controllers");
 
 const {
   checkSignupData,
@@ -18,4 +24,5 @@ router.post("/register", checkSignupData, signup);
 router.post("/login", loginData, login);
 router.post("/logout", authenticate, logout);
 router.get("/current", authenticate, currentUser);
+router.patch("/", authenticate, updateSubscription);
 module.exports = router;

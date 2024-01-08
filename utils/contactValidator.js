@@ -9,7 +9,7 @@ exports.schema = (data) =>
         tlds: { allow: ["com", "net"] },
       })
       .required(),
-    phone: Joi.string(),
+    phone: Joi.string().required(),
     favorite: Joi.boolean(),
   }).validate(data);
 
