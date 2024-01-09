@@ -3,7 +3,7 @@ const { HttpError } = require("../Errors");
 const { Contact } = require("../models");
 const { catchAsync, schema, schemaFav } = require("../utils");
 
-exports.checkUserId = catchAsync(async (req, res, next) => {
+exports.checkContactId = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const isValid = Types.ObjectId.isValid(id);
   if (!isValid) {
