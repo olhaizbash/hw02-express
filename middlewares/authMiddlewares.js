@@ -2,6 +2,8 @@ const { HttpError } = require("../Errors");
 const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const { catchAsync, signupValidator } = require("../utils");
+const multer = require("multer");
+const path = require("path");
 
 exports.checkSignupData = catchAsync(async (req, res, next) => {
   const { value, error } = signupValidator(req.body);
@@ -41,3 +43,11 @@ exports.authenticate = async (req, res, next) => {
     next(HttpError(401, "Not authorized"));
   }
 };
+
+const directory = path.join(__dirname, "../", "tmp");
+
+const multerStorage = multer.diskStorage({
+  destination: directory,
+});
+
+exports.upload = multer({ storage: multerStorage });

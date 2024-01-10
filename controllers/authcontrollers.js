@@ -3,12 +3,21 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 const { catchAsync } = require("../utils");
 const { HttpError } = require("../Errors");
+const gravatar = require("gravatar");
+const Jimp = require("jimp");
+const path = require("path");
+const fs = require("fs/promises");
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const { password } = req.body;
+  const { email, password } = req.body;
   const hashPassword = await bcrypt.hash(password, 10);
+  const avatarURL = gravatar.url(email);
+  const newUser = await User.create({
+    ...req.body,
+    password: hashPassword,
+    avatarURL,
+  });
 
-  const newUser = await User.create({ ...req.body, password: hashPassword });
   res.status(201).json({
     user: { email: newUser.email, subscription: newUser.subscription },
   });
@@ -67,3 +76,26 @@ exports.updateSubscription = async (req, res) => {
 
   res.status(200).json({ email: user.email, subscription });
 };
+
+exports.updateAvatar = catchAsync(async (req, res, next) => {
+  const { _id } = req.user;
+  const { path: directory, originalname } = req.file;
+
+  const fileName = `${_id}_${originalname}`;
+  const directoryToUpload = path.join(
+    __dirname,
+    "../",
+    "public",
+    "avatars",
+    fileName
+  );
+
+  const avatar = await Jimp.read(directory);
+  await avatar.resize(250, 250).writeAsync(directory);
+  await fs.rename(directory, directoryToUpload);
+
+  const avatarURL = path.join("avatars", fileName);
+  await User.findByIdAndUpdate(_id, { avatarURL });
+
+  res.status(200).json({ avatarURL });
+});

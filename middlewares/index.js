@@ -9,6 +9,8 @@ const {
   checkSignupData,
   authenticate,
   loginData,
+  uploadUserPhoto,
+  upload,
 } = require("./authMiddlewares");
 
 module.exports = {
@@ -19,4 +21,6 @@ module.exports = {
   checkSignupData,
   authenticate,
   loginData,
+  uploadUserPhoto,
+  upload,
 };
