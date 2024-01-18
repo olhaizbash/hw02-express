@@ -13,6 +13,8 @@ const {
   currentUser,
   updateSubscription,
   updateAvatar,
+  verifyEmail,
+  resendVerifyEmail,
 } = require("./authcontrollers");
 
 module.exports = {
@@ -27,4 +29,6 @@ module.exports = {
   currentUser,
   updateSubscription,
   updateAvatar,
+  verifyEmail,
+  resendVerifyEmail,
 };

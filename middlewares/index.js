@@ -11,6 +11,7 @@ const {
   loginData,
   uploadUserPhoto,
   upload,
+  emailData,
 } = require("./authMiddlewares");
 
 module.exports = {
@@ -23,4 +24,5 @@ module.exports = {
   loginData,
   uploadUserPhoto,
   upload,
+  emailData,
 };

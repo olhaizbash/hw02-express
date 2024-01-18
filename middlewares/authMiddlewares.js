@@ -1,7 +1,7 @@
 const { HttpError } = require("../Errors");
 const { User } = require("../models");
 const jwt = require("jsonwebtoken");
-const { catchAsync, signupValidator } = require("../utils");
+const { catchAsync, signupValidator, emailSchema } = require("../utils");
 const multer = require("multer");
 const path = require("path");
 
@@ -18,6 +18,13 @@ exports.checkSignupData = catchAsync(async (req, res, next) => {
 
 exports.loginData = catchAsync(async (req, res, next) => {
   const { value, error } = signupValidator(req.body);
+  if (error) throw HttpError(400, "Invalid user data");
+  req.body = value;
+  next();
+});
+
+exports.emailData = catchAsync(async (req, res, next) => {
+  const { value, error } = emailSchema(req.body);
   if (error) throw HttpError(400, "Invalid user data");
   req.body = value;
   next();
