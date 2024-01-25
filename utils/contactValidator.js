@@ -34,3 +34,13 @@ exports.schemaFav = (data) =>
     phone: Joi.string(),
     favorite: Joi.boolean().required(),
   }).validate(data);
+
+exports.emailSchema = (data) =>
+  Joi.object({
+    email: Joi.string()
+      .email({
+        minDomainSegments: 2,
+        tlds: { allow: ["com", "net"] },
+      })
+      .required(),
+  }).validate(data);
